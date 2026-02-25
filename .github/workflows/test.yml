@@ -10,10 +10,10 @@ on:
 jobs:
   dryrun:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Install anaconda-client
-        shell: bash
-        run: pip install anaconda-client
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: test
         uses: ./
         with:
@@ -22,3 +22,6 @@ jobs:
           PACKAGE_NAME: ibeatles
           LABEL: dev
           DRY_RUN: true
+      - name: Install anaconda-client
+        shell: bash
+        run: pip install anaconda-client
