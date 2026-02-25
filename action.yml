@@ -1,0 +1,47 @@
+name: conda-pkg-remove
+description: Remove old packages of a specific label from anaconda.org
+author: neutrons
+branding:
+  icon: trash-2
+  color: red
+
+inputs:
+  anaconda-token:
+    description: Anaconda.org API token
+    required: true
+  organization:
+    description: Anaconda.org organization or user name
+    required: true
+  package-name:
+    description: Name of the conda package to clean up
+    required: true
+  label:
+    description: |
+      Label to target for cleanup (e.g., dev, nightly, rc)
+    required: true
+  keep:
+    description: Number of most recent package versions to keep
+    required: false
+    default: "5"
+  dry-run:
+    description: If true, only print what would be deleted without actually deleting
+    required: false
+    default: "false"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install anaconda-client
+      shell: bash
+      run: pip install anaconda-client
+
+    - name: Remove old labeled packages
+      shell: bash
+      env:
+        ANACONDA_TOKEN: ${{ inputs.anaconda-token }}
+        ORGANIZATION: ${{ inputs.organization }}
+        PACKAGE_NAME: ${{ inputs.package-name }}
+        LABEL: ${{ inputs.label }}
+        KEEP: ${{ inputs.keep }}
+        DRY_RUN: ${{ inputs.dry-run }}
+      run: python ${{ github.action_path }}/remove_packages.py
