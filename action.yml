@@ -6,13 +6,13 @@ branding:
   color: red
 
 inputs:
-  anaconda-token:
+  anaconda_token:
     description: Anaconda.org API token
     required: true
   organization:
     description: Anaconda.org organization or user name
     required: true
-  package-name:
+  package_name:
     description: Name of the conda package to clean up
     required: true
   label:
@@ -24,7 +24,7 @@ inputs:
     description: Number of most recent package versions to keep
     required: false
     default: "5"
-  dry-run:
+  dry_run:
     description: If true, only print what would be deleted without actually deleting
     required: false
     default: "false"
@@ -39,12 +39,12 @@ runs:
     - name: Remove old labeled packages
       shell: bash
       env:
-        ANACONDA_TOKEN: ${{ inputs.anaconda-token }}
+        ANACONDA_TOKEN: ${{ inputs.anaconda_token }}
         ORGANIZATION: ${{ inputs.organization }}
-        PACKAGE_NAME: ${{ inputs.package-name }}
+        PACKAGE_NAME: ${{ inputs.package_name }}
         LABEL: ${{ inputs.label }}
         KEEP: ${{ inputs.keep }}
-        DRY_RUN: ${{ inputs.dry-run }}
+        DRY_RUN: ${{ inputs.dry_run }}
         run: |
           ANACONDA_URL="https://api.anaconda.org/package/${{ env.ORGANIZATION }}/${{ env.PACKAGE_NAME }}"
           curl -s ${ANACONDA_URL}
