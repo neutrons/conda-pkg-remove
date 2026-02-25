@@ -58,8 +58,9 @@ runs:
             | .[${{ env.KEEP }}:]
             | .[].files[]
           ')
+        echo "ZZZ${FILES_TO_REMOVE}ZZZ"
         if [ -z "${FILES_TO_REMOVE}" ]; then
-          echo "No old files to remove from ${env.LABEL}"
+          echo "No old files to remove from ${{ env.LABEL }}"
           return 0
         else
           echo "Removing old dev files"
