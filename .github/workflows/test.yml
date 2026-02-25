@@ -17,11 +17,11 @@ jobs:
       - name: test
         uses: ./
         with:
-          ANACONDA_TOKEN: unset_token
-          ORGANIZATION: neutronimaging
-          PACKAGE_NAME: ibeatles
-          LABEL: dev
-          DRY_RUN: true
+          anaconda-token: unset_token
+          organization: neutronimaging
+          package-name: ibeatles
+          label: dev
+          dry-run: true
       - name: Install anaconda-client
         shell: bash
         run: pip install anaconda-client
