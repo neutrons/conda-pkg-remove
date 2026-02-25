@@ -46,7 +46,7 @@ runs:
         curl -s ${ANACONDA_URL}
         FILES_TO_REMOVE=$(curl -s ${ANACONDA_URL} \
           | jq -r '
-            [.files[] | select(.labels | index("${env.LABEL}"))]
+            [.files[] | select(.labels | index("${{ env.LABEL }}"))]
             | group_by(.version)
             | map({
                 version: .[0].version,
