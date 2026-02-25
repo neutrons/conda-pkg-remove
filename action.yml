@@ -18,7 +18,8 @@ inputs:
   label:
     description: |
       Label to target for cleanup (e.g., dev, nightly, rc)
-    required: true
+    required: false
+    default: "dev"
   keep:
     description: Number of most recent package versions to keep
     required: false
@@ -44,4 +45,26 @@ runs:
         LABEL: ${{ inputs.label }}
         KEEP: ${{ inputs.keep }}
         DRY_RUN: ${{ inputs.dry-run }}
-      run: python ${{ github.action_path }}/remove_packages.py
+        run: |
+          ANACONDA_URL="https://api.anaconda.org/package/${{ env.ORGANIZATION }}/${{ env.PACKAGE_NAME }}"
+          curl -s ${ANACONDA_URL}
+          FILES_TO_REMOVE=$(curl -s ${ANACONDA_URL} \
+            | jq -r '
+              [.files[] | select(.labels | index("${env.LABEL}"))]
+              | group_by(.version)
+              | map({
+                  version: .[0].version,
+                  upload_time: (map(.upload_time) | max),
+                  files: [.[].full_name]
+                })
+              | sort_by(.upload_time)
+              | reverse
+              | .[${{ env.KEEP }}:]
+              | .[].files[]
+            ')
+          if [ -z "${FILES_TO_REMOVE}" ]; then
+            echo "No old files to remove from ${env.LABEL}"
+            return 0
+          else
+            echo "Removing old dev files"
+          fi
