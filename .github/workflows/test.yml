@@ -29,11 +29,11 @@ jobs:
         env:
           NUM_REMOVED: ${{ steps.test.outputs.num_removed }}
         run: |
-           echo "Number of files is ${{ steps.test.outputs.num_removed }} or ${NUM_REMOVED}"
-           if [ -z "${{ steps.test.outputs.num_removed }}" ]; then
+           echo "Number of files is ${NUM_REMOVED}"
+           if [ -z "${NUM_REMOVED}" ]; then
              echo "Did not get variable"
              exit 1
-           elif [ ! "${{ steps.test.outputs.num_removed }}" -gt 0 ]; then
+           elif [ ! "${NUM_REMOVED}" -gt 0 ]; then
              echo "Something went wrong!"
              exit 1
            fi
@@ -59,11 +59,11 @@ jobs:
         env:
           NUM_REMOVED: ${{ steps.test.outputs.num_removed }}
         run: |
-           echo "Number of files is ${{ steps.test.outputs.num_removed }} or ${NUM_REMOVED}"
-           if [ -z "${{ steps.test.outputs.num_removed }}" ]; then
+           echo "Number of files is ${NUM_REMOVED}"
+           if [ -z "${NUM_REMOVED}" ]; then
              echo "Did not get variable"
              exit 1
-           elif [ ! "${{ steps.test.outputs.num_removed }}" -eq 0 ]; then
+           elif [ ! "${NUM_REMOVED}" -eq 0 ]; then
              echo "Something went wrong!"
              exit 1
            fi
