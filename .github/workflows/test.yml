@@ -23,7 +23,7 @@ jobs:
           package_name: ibeatles
           label: dev
           keep: 0
-          dry_run: true
+          dry_run: false
       - name: Check number files
         shell: bash
         env:
