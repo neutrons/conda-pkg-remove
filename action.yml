@@ -74,7 +74,7 @@ runs:
           echo "Removing old ${{ env.LABEL }} files"
           for FILE in ${FILES_TO_REMOVE}; do
             echo "Removing ${FILE}"
-            if [ ! ${{ env.DRY_RUN }} ]; then
+            if [ "${{ env.DRY_RUN }}" = "false" ]; then
               echo "should actually delete ${FILE}"
             fi
             num_removed=$((num_removed+1))
