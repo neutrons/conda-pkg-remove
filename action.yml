@@ -71,7 +71,8 @@ runs:
           for FILE in ${FILES_TO_REMOVE}; do
             echo "Removing ${FILE}"
             if [ ${{ env.DRY_RUN != true }} ]; then
-            echo "should actually delete ${FILE}"
+              echo "should actually delete ${FILE}"
+            fi
           done
         fi
         # write out number of packages that should have been deleted
