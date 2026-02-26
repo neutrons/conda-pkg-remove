@@ -75,7 +75,7 @@ runs:
           for FILE in ${FILES_TO_REMOVE}; do
             echo "Removing ${FILE}"
             if [ "${{ env.DRY_RUN }}" = "false" ]; then
-              echo "should actually delete ${FILE}"
+              pixi run anaconda remove --force "${FILE}"
             fi
             num_removed=$((num_removed+1))
           done
