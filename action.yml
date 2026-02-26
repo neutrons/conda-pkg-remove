@@ -29,10 +29,16 @@ inputs:
     required: false
     default: "false"
 
+outputs:
+    num_files:
+      description: "Number of files that would be deleted"
+      value: ${{ steps.remove_step.outputs.num_files }}
+
 runs:
   using: "composite"
   steps:
     - name: Remove old labeled packages
+      id: remove_step
       shell: bash
       env:
         ANACONDA_TOKEN: ${{ inputs.anaconda_token }}
