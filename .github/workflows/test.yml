@@ -27,9 +27,6 @@ jobs:
         shell: bash
         run: |
            echo "Number of files is ${{ steps.Test.outputs.num_files }}"
-      - name: Install anaconda-client
-        shell: bash
-        run: pip install anaconda-client
 
   keep-all:
     runs-on: ubuntu-latest
@@ -50,6 +47,3 @@ jobs:
         shell: bash
         run: |
            echo "Number of files is ${{ steps.Test.outputs.num_files }}"
-      - name: Install anaconda-client
-        shell: bash
-        run: pip install anaconda-client
