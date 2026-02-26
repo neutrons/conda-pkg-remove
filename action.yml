@@ -78,5 +78,5 @@ runs:
             num_removed=$((num_removed+1))
           done
         fi
-        echo "num_removed=0"
+        echo "num_removed=${num_removed}"
         echo "num_removed=${num_removed}" >> $GITHUB_OUTPUT
