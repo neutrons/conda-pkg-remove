@@ -58,13 +58,16 @@ runs:
             | .[${{ env.KEEP }}:]
             | .[].files[]
           ')
-        echo "ZZZ${FILES_TO_REMOVE}ZZZ"
+
         if [ -z "${FILES_TO_REMOVE}" ]; then
           echo "No old files to remove from ${{ env.LABEL }}"
         else
           echo "Removing old ${{ env.LABEL }} files"
           for FILE in ${FILES_TO_REMOVE}; do
             echo "Removing ${FILE}"
-            # TODO add dry-run=false step
+	    if [ ${{ env.DRY_RUN != true }} ]; then
+	      echo "should actually delete ${FILE}"
           done
         fi
+	# write out number of packages that should have been deleted
+	echo "num_files=${#FILES_TO_REMOVE[@]}" >> "$GITHUB_OUTPUT"
