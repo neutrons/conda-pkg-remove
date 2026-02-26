@@ -22,13 +22,19 @@ jobs:
 
 ## Inputs
 
-| Input | Description | Required | Default |
-|-------|-------------|----------|---------|
-| `anaconda-token` | Anaconda.org API token | Yes | - |
-| `organization` | Anaconda.org organization or user name | Yes | - |
-| `package-name` | Name of the conda package to clean up | Yes | - |
-| `label` | Label to target for cleanup (e.g., `dev`, `nightly`, `rc`) | Yes | - |
-| `keep` | Number of most recent package versions to keep | No | `5` |
-| `dry-run` | If `true`, only print what would be deleted without actually deleting | No | `false` |
+| Input            | Description                            | Required | Default |
+|------------------|----------------------------------------|----------|---------|
+| `anaconda_token` | Anaconda.org API token                 | Yes      | - |
+| `organization`   | Anaconda.org organization or user name | Yes      | - |
+| `package_name`   | Name of the conda package to clean up  | Yes      | - |
+| `label`          | Label to target for cleanup (e.g., `dev`, `nightly`, `rc`) | Yes | - |
+| `keep`           | Number of most recent package versions to keep | No | `5` |
+| `dry_run`        | If `true`, only print what would be deleted without actually deleting | No | `false` |
 
-Available inputs are also listed in [`action.yml`](action.yml).
+## Outputs
+
+| Output        |                                       |
+|---------------|---------------------------------------|
+| `num_removed` | Number of files that would be deleted |
+
+Available inputs and outputs are also listed in [`action.yml`](action.yml).
