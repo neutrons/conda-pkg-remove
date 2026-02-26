@@ -26,8 +26,10 @@ jobs:
           dry_run: true
       - name: Check number files
         shell: bash
+        env:
+          NUM_REMOVED: ${{ steps.test.outputs.num_removed }}
         run: |
-           echo "Number of files is ${{ steps.test.outputs.num_removed }}"
+           echo "Number of files is ${{ steps.test.outputs.num_removed }} or ${NUM_REMOVED}"
            if [ ! "${{ steps.test.outputs.num_removed }}" -gt 0 ]; then
              echo "Something went wrong!"
              exit 1
@@ -51,8 +53,10 @@ jobs:
           dry_run: true
       - name: Check number files
         shell: bash
+        env:
+          NUM_REMOVED: ${{ steps.test.outputs.num_removed }}
         run: |
-           echo "Number of files is ${{ steps.test.outputs.num_removed }}"
+           echo "Number of files is ${{ steps.test.outputs.num_removed }} or ${NUM_REMOVED}"
            if [ ! "${{ steps.test.outputs.num_removed }}" -eq 0 ]; then
              echo "Something went wrong!"
              exit 1
