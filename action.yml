@@ -70,10 +70,11 @@ runs:
           echo "Removing old ${{ env.LABEL }} files"
           for FILE in ${FILES_TO_REMOVE}; do
             echo "Removing ${FILE}"
-            if [ ${{ env.DRY_RUN != true }} ]; then
+            if [ ${{ env.DRY_RUN == false }} ]; then
               echo "should actually delete ${FILE}"
             fi
           done
         fi
         # write out number of packages that should have been deleted
+        echo "num_files=${#FILES_TO_REMOVE[@]}"
         echo "num_files=${#FILES_TO_REMOVE[@]}" >> "$GITHUB_OUTPUT"
