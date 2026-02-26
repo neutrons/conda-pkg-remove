@@ -61,7 +61,10 @@ runs:
         echo "ZZZ${FILES_TO_REMOVE}ZZZ"
         if [ -z "${FILES_TO_REMOVE}" ]; then
           echo "No old files to remove from ${{ env.LABEL }}"
-          return 0
         else
-          echo "Removing old dev files"
+          echo "Removing old ${{ env.LABEL }} files"
+          for FILE in ${FILES_TO_REMOVE}; do
+            echo "Removing ${FILE}"
+            # TODO add dry-run=false step
+          done
         fi

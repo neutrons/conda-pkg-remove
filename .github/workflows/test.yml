@@ -8,7 +8,7 @@ on:
     tags: ["v*"]
 
 jobs:
-  dryrun:
+  keep-none:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,6 +21,26 @@ jobs:
           organization: neutronimaging
           package_name: ibeatles
           label: dev
+          keep: 0
+          dry_run: true
+      - name: Install anaconda-client
+        shell: bash
+        run: pip install anaconda-client
+
+  keep-all:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: test
+        uses: ./
+        with:
+          anaconda_token: unset_token
+          organization: neutronimaging
+          package_name: ibeatles
+          label: dev
+          keep: 100
           dry_run: true
       - name: Install anaconda-client
         shell: bash
