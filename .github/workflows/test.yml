@@ -15,6 +15,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Test
+        id: test
         uses: ./
         with:
           anaconda_token: unset_token
@@ -26,7 +27,11 @@ jobs:
       - name: Check number files
         shell: bash
         run: |
-           echo "Number of files is ${{ steps.Test.outputs.num_removed }}"
+           echo "Number of files is ${{ steps.test.outputs.num_removed }}"
+           if [ ! "${{ steps.test.outputs.num_removed }}" -gt 0 ]; then
+             echo "Something went wrong!"
+             exit 1
+           fi
 
   keep-all:
     runs-on: ubuntu-latest
@@ -35,6 +40,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Test
+        id: test
         uses: ./
         with:
           anaconda_token: unset_token
@@ -46,4 +52,8 @@ jobs:
       - name: Check number files
         shell: bash
         run: |
-           echo "Number of files is ${{ steps.Test.outputs.num_removed }}"
+           echo "Number of files is ${{ steps.test.outputs.num_removed }}"
+           if [ ! "${{ steps.test.outputs.num_removed }}" -eq 0 ]; then
+             echo "Something went wrong!"
+             exit 1
+           fi
