@@ -32,7 +32,6 @@ inputs:
 outputs:
     num_removed:
       description: "Number of files that would be deleted"
-      value: ${{ steps.remove_step.outputs.num_files }}
 
 runs:
   using: "composite"
