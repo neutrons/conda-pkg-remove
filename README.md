@@ -13,9 +13,9 @@ jobs:
       - name: Remove old dev packages
         uses: neutrons/conda-pkg-remove@main
         with:
-          anaconda-token: ${{ secrets.ANACONDA_TOKEN }}
+          anaconda_token: ${{ secrets.ANACONDA_TOKEN }}
           organization: neutrons
-          package-name: my-package
+          package_name: my-package
           label: dev
           keep: 5
 ```
