@@ -30,9 +30,9 @@ inputs:
     default: "false"
 
 outputs:
-    num_removed:
-      description: "Number of files that would be deleted"
-      value: ${{ steps.remove_pkg.outputs.num_removed }}
+  num_removed:
+    description: "Number of files that would be deleted"
+    value: ${{ steps.remove_pkg.outputs.num_removed }}
 
 runs:
   using: "composite"
@@ -48,9 +48,14 @@ runs:
         KEEP: ${{ inputs.keep }}
         DRY_RUN: ${{ inputs.dry_run }}
       run: |
-        ANACONDA_URL="https://api.anaconda.org/package/${{ env.ORGANIZATION }}/${{ env.PACKAGE_NAME }}"
-        curl -s ${ANACONDA_URL}
-        FILES_TO_REMOVE=$(curl -s ${ANACONDA_URL} \
+        ANACONDA_URL="https://api.anaconda.org/package/${{ ORGANIZATION }}/${{ PACKAGE_NAME }}"
+        # 5.5 second timeout on curl
+        RAW_RESULT=$(curl --max-time 5.5 -s ${ANACONDA_URL})
+        if [ -z "${RAW_RESULT}" ]; then
+          echo "Curl returned empty result"
+          exit 1
+        fi
+        FILES_TO_REMOVE=$(echo "${RAW_RESULT}" \
           | jq -r '
             [.files[] | select(.labels | index("${{ env.LABEL }}"))]
             | group_by(.version)
