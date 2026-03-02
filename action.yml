@@ -55,6 +55,7 @@ runs:
           echo "Curl returned empty result"
           exit 1
         fi
+        echo "${RAW_RESULT}"
         FILES_TO_REMOVE=$(echo "${RAW_RESULT}" \
           | jq -r '
             [.files[] | select(.labels | index("${{ env.LABEL }}"))]
