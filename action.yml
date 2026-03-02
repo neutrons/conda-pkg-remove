@@ -48,7 +48,8 @@ runs:
         KEEP: ${{ inputs.keep }}
         DRY_RUN: ${{ inputs.dry_run }}
       run: |
-        ANACONDA_URL="https://api.anaconda.org/package/${{ ORGANIZATION }}/${{ PACKAGE_NAME }}"
+        ANACONDA_URL="https://api.anaconda.org/package/"
+        ANACONDA_URL="${ANACONDA_URL}${{ env.ORGANIZATION }}/${{ env.PACKAGE_NAME }}"
         # 5.5 second timeout on curl
         RAW_RESULT=$(curl --max-time 5.5 -s ${ANACONDA_URL})
         if [ -z "${RAW_RESULT}" ]; then
